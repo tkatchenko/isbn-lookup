@@ -15,25 +15,32 @@ module.exports = {
       }
     ],
     perform: (z, bundle) => {
-      const url = 'https://openlibrary.org/api/books';
+      const url = 'https://www.googleapis.com/books/v1/volumes';
 
       const options = {
         params: {
-          bibkeys: 'ISBN:' + bundle.inputData.isbn,
-          format: 'JSON',
-          jscmd: 'data',
+          q: 'isbn:' + bundle.inputData.isbn,
+          projection: 'full',
         }
       };
 
       return z.request(url, options).then((response) => {
-        const books = JSON.parse(response.content);
-        const bookIndex = Object.keys(books)[0]
-        const book = books[bookIndex];
-        console.log(book);
+        const result = JSON.parse(response.content);
+
+        if (result.totalItems === 0) return [];
+
+        const book = result.items[0].volumeInfo;
+
         return [
           {
-            title: book.title,    
-            authors: book.authors.map(el => el.name).join(', '),
+            title: book.title,
+            authors: book.authors.join(', '),
+            publisher: book.publisher,
+            publishDate: book.publishedDate,
+            pages: book.pageCount,
+            categories: book.categories.join(', '),
+            cover: book.imageLinks.thumbnail,
+            webLink: book.infoLink,
           },
         ];
       });
