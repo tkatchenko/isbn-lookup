@@ -2,16 +2,26 @@ require('should');
 
 const zapier = require('zapier-platform-core');
 
-// Use this to make test calls into your app:
 const App = require('../index');
 const appTester = zapier.createAppTester(App);
 
-describe('My App', () => {
+describe('ISBN Lookup', () => {
+  it('should search for a book', (done) => {
+    const bundle = {
+      inputData: {
+        isbn: '0451526538',
+      }
+    };
 
-  it('should test something', (done) => {
-    const x = 1;
-    x.should.eql(1);
-    done();
+    appTester(App.searches.book.operation.perform, bundle)
+      .then(results => {
+        //should(results.length).above(1);
+
+        console.log('Result: ', results)
+
+        done();
+      })
+      .catch(done);
   });
 
 });
