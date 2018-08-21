@@ -15,7 +15,7 @@ describe('ISBN Lookup', () => {
 
     appTester(App.searches.book.operation.perform, bundle)
       .then(results => {
-        //should(results.length).above(1);
+        should(results.length).equal(1);
 
         console.log('Result: ', results)
 
