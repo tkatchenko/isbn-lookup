@@ -39,7 +39,7 @@ module.exports = {
             publishDate: book.publishedDate,
             pages: book.pageCount,
             categories: book.categories.join(', '),
-            cover: book.imageLinks.thumbnail,
+            cover: book.imageLinks.thumbnail.replace('&edge=curl', ''),
             webLink: book.infoLink,
           },
         ];
