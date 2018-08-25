@@ -31,6 +31,7 @@ module.exports = {
 
         const book = result.items[0].volumeInfo;
         const thumbnail = (book.imageLinks) ? book.imageLinks.thumbnail.replace('&edge=curl', '') : '';
+        const categories = (book.categories) ? book.categories.join(', ') : '';
 
         return [
           {
@@ -39,7 +40,7 @@ module.exports = {
             publisher: book.publisher,
             publishDate: book.publishedDate,
             pages: book.pageCount,
-            categories: book.categories.join(', '),
+            categories: categories,
             cover: thumbnail,
             webLink: book.infoLink,
           },
