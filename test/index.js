@@ -8,6 +8,7 @@ const appTester = zapier.createAppTester(App);
 describe('ISBN Lookup', () => {
   testISBN('9064507198');
   testISBN('9780992914684');
+  testISBN('0822371057');
 });
 
 function testISBN(isbn) {
