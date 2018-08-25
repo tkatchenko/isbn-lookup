@@ -6,10 +6,15 @@ const App = require('../index');
 const appTester = zapier.createAppTester(App);
 
 describe('ISBN Lookup', () => {
-  it('should search for a book', (done) => {
+  testISBN('9064507198');
+  testISBN('9780992914684');
+});
+
+function testISBN(isbn) {
+  it('should search for ' + isbn, (done) => {
     const bundle = {
       inputData: {
-        isbn: '0451526538',
+        isbn: isbn,
       }
     };
 
@@ -17,11 +22,10 @@ describe('ISBN Lookup', () => {
       .then(results => {
         should(results.length).equal(1);
 
-        console.log('Result: ', results)
+        console.log(results);
 
         done();
       })
       .catch(done);
   });
-
-});
+}
